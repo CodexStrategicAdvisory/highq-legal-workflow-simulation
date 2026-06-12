@@ -1,1 +1,65 @@
+{
+  "name": "Contract Review iSheet",
+  "description": "Structured data model for tracking contracts through a review workflow.",
+  "columns": [
+    { "name": "Contract ID", "type": "text", "required": true, "unique": true },
+    { "name": "Counterparty", "type": "text", "required": true },
+    { "name": "Contract Type", "type": "choice", "required": true,
+      "options": ["MSA", "NDA", "SOW", "License", "Other"] },
+    { "name": "Risk Level", "type": "choice", "required": true,
+      "options": ["Low", "Medium", "High"] },
+    { "name": "Status", "type": "choice", "required": true,
+      "options": ["Intake", "In Review", "On Hold", "Approved", "Rejected"] },
+    { "name": "Assigned Reviewer", "type": "user", "required": false },
+    { "name": "Intake Date", "type": "date", "required": true },
+    { "name": "Target Completion Date", "type": "date", "required": false },
+    { "name": "Actual Completion Date", "type": "date", "required": false },
+    { "name": "Comments", "type": "text", "required": false }
+  ],
+  "validationRules": [
+    {
+      "name": "High risk must have reviewer",
+      "condition": "Risk Level == 'High' AND Status != 'Intake'",
+      "require": ["Assigned Reviewer"]
+    }
+  ],
+  "sampleRows": [
+    {
+      "Contract ID": "C-2026-001",
+      "Counterparty": "Acme Corp",
+      "Contract Type": "MSA",
+      "Risk Level": "High",
+      "Status": "In Review",
+      "Assigned Reviewer": "legal.reviewer1@company.com",
+      "Intake Date": "2026-06-10",
+      "Target Completion Date": "2026-06-17",
+      "Actual Completion Date": null,
+      "Comments": "Priority deal, short timeline."
+    },
+    {
+      "Contract ID": "C-2026-002",
+      "Counterparty": "Beta Labs",
+      "Contract Type": "NDA",
+      "Risk Level": "Low",
+      "Status": "Approved",
+      "Assigned Reviewer": "legal.reviewer2@company.com",
+      "Intake Date": "2026-06-05",
+      "Target Completion Date": "2026-06-07",
+      "Actual Completion Date": "2026-06-06",
+      "Comments": "Standard NDA template."
+    },
+    {
+      "Contract ID": "C-2026-003",
+      "Counterparty": "Gamma Health",
+      "Contract Type": "License",
+      "Risk Level": "Medium",
+      "Status": "Intake",
+      "Assigned Reviewer": null,
+      "Intake Date": "2026-06-12",
+      "Target Completion Date": null,
+      "Actual Completion Date": null,
+      "Comments": "Waiting for business input on scope."
+    }
+  ]
+}
 
