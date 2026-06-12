@@ -1,0 +1,45 @@
+site:
+  name: Contract Review Workspace
+  description: HighQ-style site for managing contract review workflows.
+
+roles:
+  - name: Legal Admin
+    description: Full control over site, iSheets, workflows, and permissions.
+  - name: Legal Reviewer
+    description: Can view and edit contracts, run workflows, and update statuses.
+  - name: Business User
+    description: Can submit contracts for review and view status of their matters.
+  - name: External Counsel
+    description: Limited access to assigned matters and related documents.
+
+groups:
+  - name: Legal Admins
+    role: Legal Admin
+  - name: Legal Reviewers
+    role: Legal Reviewer
+  - name: Business Stakeholders
+    role: Business User
+  - name: Outside Counsel
+    role: External Counsel
+
+access:
+  isheets:
+    contract_review_isheet:
+      Legal Admin: full
+      Legal Reviewer: edit
+      Business User: create_own_and_view_own
+      External Counsel: view_assigned
+
+  workflows:
+    contract_review_workflow:
+      Legal Admin: manage
+      Legal Reviewer: execute
+      Business User: trigger_on_intake
+      External Counsel: none
+
+  dashboards:
+    contract_review_dashboard:
+      Legal Admin: view
+      Legal Reviewer: view
+      Business User: view
+      External Counsel: view_limited
